@@ -1,0 +1,13 @@
+baseURL = "https://thel.foo"
+# [en, zh-cn, fr, ...] determines default content language
+defaultContentLanguage = "en"
+# language code
+languageCode = "en"
+# Change the default theme to be use when building the site with Hugo
+theme = "DoIt"
+# website title
+title = "Thel"    
+# site description
+description = "A blog on iOS development"
+
+

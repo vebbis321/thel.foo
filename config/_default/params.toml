@@ -1,0 +1,176 @@
+# DoIt theme version
+version = "0.3.X"
+# default theme    
+defaultTheme = "black"
+
+
+# Home page config
+[home]
+    # DoIt NEW | 0.2.0 amount of RSS pages
+    rss = 10
+
+    # Home page profile
+    [home.profile]
+        enable = true
+        # Gravatar Email for preferred avatar in home page
+        gravatarEmail = ""
+        # URL of avatar shown in home page
+        # Place your avatar file under static or assets directory
+        # The filepath is relative to the static or assets directory
+        avatarURL = "me.png"
+        # URL the avatar links to
+        avatarLinkURL = ""
+        # DoIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
+        title = "Thel"
+        # subtitle shown in home page
+        subtitle = "A blog on iOS development"
+        # whether to use typeit animation for subtitle
+        typeit = true
+        # whether to show social links
+        social = true
+        # DoIt NEW | 0.2.0 disclaimer (HTML format is supported)
+        disclaimer = ""
+    
+    # Home page posts
+    [home.posts]
+    enable = true
+        # special amount of posts in each home posts page
+        paginate = 7
+        # DoIt DELETED | 0.2.0 replaced with hiddenFromHomePage in params.page
+        # default behavior when you don't set "hiddenFromHomePage" in front matter
+        #defaultHiddenFromHomePage = false
+
+ # Social config about the author
+[social]
+    GitHub = "vebbis321"
+    #Twitter = "xxxx"
+    #Instagram = "xxxx"
+    #Youtubechannel = ""
+    Stackoverflow = "13302643"
+
+[page]
+    # DoIt NEW | 0.2.0 whether to hide a page from home page
+    hiddenFromHomePage = false
+    # DoIt NEW | 0.2.0 whether to hide a page from search results
+    hiddenFromSearch = false
+    # DoIt NEW | 0.2.0 whether to enable twemoji
+    twemoji = false
+    # whether to enable lightgallery
+    lightgallery = false
+    # DoIt NEW | 0.2.0 whether to enable the ruby extended syntax
+    ruby = true
+    # DoIt NEW | 0.2.0 whether to enable the fraction extended syntax
+    fraction = true
+    # DoIt NEW | 0.2.0 whether to enable the fontawesome extended syntax
+    fontawesome = true
+    # whether to show link to Raw Markdown content of the content
+    linkToMarkdown = true
+    # whether to enable last modified time
+    enableLastMod = true
+    # whether to enable word count
+    enableWordCount = true
+    # whether to enable reading time estimation
+    enableReadingTime = true
+    # DoIt NEW | 0.2.13 outdated article reminder config
+    rssFullText = false
+    # whether to enable series navigation
+    # 是否使用系列导航
+
+
+    
+    [page.toc]
+        # whether to enable the table of the contents
+        # 是否使用目录
+        enable = true
+        # whether to keep the static table of the contents in front of the post
+        # 是否保持使用文章前面的静态目录
+        keepStatic = false
+        # whether to make the table of the contents in the sidebar automatically collapsed
+        # 是否使侧边目录自动折叠展开
+        auto = true
+
+    
+    [page.code]
+        # whether to show the copy button of the code block
+        # 是否显示代码块的复制按钮
+        copy = true
+        # the maximum number of lines of displayed code by default
+        # 默认展开显示的代码行数
+        maxShownLines = 140
+    [page.table]
+        # whether to enable sorting in the tables
+        # 是否开启表格排序
+        sort = true
+
+    [page.header]
+    # whether to enable auto header numbering
+    # 是否开启标题自动编号
+    [page.header.number]
+        enable = true
+        [page.header.number.format]
+            h2 = "{h2} {title}"
+            h3 = "{h2}.{h3} {title}"
+            h4 = "{h2}.{h3}.{h4} {title}"
+            h5 = "{h2}.{h3}.{h4}.{h5} {title}"
+            h6 = "{h2}.{h3}.{h4}.{h5}.{h6} {title}"
+
+    [page.share]
+        enable = true
+        Twitter = true
+        Facebook = true
+        HackerNews = false
+        Reddit = true
+        Mastodon = true
+    
+    # giscus comment config (https://giscus.app/)
+    # giscus comment 评论系统设置 (https://giscus.app/)
+    [page.comment.giscus]
+        enable = false
+        # owner/repo
+        dataRepo = ""
+        dataRepoId = ""
+        dataCategory = ""
+        dataCategoryId = ""
+        dataMapping = "pathname"
+        dataStrict = "0"
+        dataReactionsEnabled = "1"
+        dataEmitMetadata = "0"
+        dataInputPosition = "bottom"
+        lightTheme = "light"
+        darkTheme = "dark"
+        dataLang = "en"
+
+
+
+[search]
+    enable = true
+    # type of search engine ("algolia", "fuse")
+    type = "fuse"
+    # max index length of the chunked content
+    contentLength = 4000
+    # placeholder of the search bar
+    placeholder = ""
+    # max number of results length
+    maxResultLength = 10
+    # snippet length of the result
+    snippetLength = 300
+    # HTML tag name of the highlight part in results
+    highlightTag = "em"
+    # whether to use the absolute URL based on the baseURL in search index
+    absoluteURL = false
+    [search.algolia]
+#index = "en_index"
+#       appID = "5YGRNRQK1G"
+#       searchKey = "0ff6874805de24b84aa1d5ebccad56cd"
+    [search.fuse]
+    # https://fusejs.io/api/options.html
+        isCaseSensitive = false
+        minMatchCharLength = 2
+        findAllMatches = false
+        location = 0
+        threshold = 0.1
+        distance = 100
+        ignoreLocation = true
+        useExtendedSearch = false
+        ignoreFieldNorm = false
+
