@@ -175,11 +175,14 @@ All we have to do now is bind the textField to the name publisher property in ou
 ```swift
 // UITextField + Extensions
 extension UITextField {
+
+    // now lets create a publisher based on the notification that we observe
     func textPublisher() -> AnyPublisher<String, Never> {
         NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object:  self)
             .compactMap { ($0.object as? UITextField)?.text }
             .eraseToAnyPublisher()
+            
     }
 }
 ```
@@ -221,7 +224,7 @@ override func viewDidLoad() {
 }
 ```
 
-Now XCode will yell at us since we haven't implemented this method in our CustomTextField.
+Now Xcode will yell at us since we haven't implemented this method in our CustomTextField.
 
 ## CustomTextField
 ```swift
@@ -328,11 +331,12 @@ Nice. Now run the code and see the errorLabel conditionally return us an error w
 ## Why is this a bad approach?
 
 ### Duplication
-The first problem I faced by following most of the tutorials/articles online was that by using a ViewModel I had to duplicate the validation process for each screen. Why? Each validation was now in the scope of a single ViewModel, and that ViewModel was tightly coupled with the ViewController for that screen -- NameViewModel with NameViewController, EmailViewModel with EmailViewController etc.
+The first problem I faced by using a ViewModel I had to duplicate the validation process for each screen. Why? Each validation was now in the scope of a single ViewModel, and that ViewModel was tightly coupled with the ViewController for that screen -- NameViewModel with NameViewController, EmailViewModel with EmailViewController etc.
 
 ### Forcing a ViewModel
-The second problem was that the ViewModel felt more forced; the screens
-were fairly simple, and I didn't need another reference type for the validation of the text input. So I thought there must be a better way. And there is!
+The second problem was that the ViewModel felt more forced, what do I mean by that: 
+ - In production code I found the validation code in the class for the custom textFields. Which makes a lot more sense. Why? If it's outside our textField we have to implement it every single time we use the textField.
+ - The screens were fairly simple, and I didn't need another reference type for the validation of the text input. So I thought there must be a better way. And there is!
 
 ## Start with a protocol
 Whenever you're developing classes for behavioral purposes and you've created some behavior that's hard to replicate, think protocols. What do I mean by behavioral purposes, think of what we are actually trying to achieve with our NameViewModel class. We're not trying to create a layer between us and a specific service class, where we can transform the models into actual data for our view, no, we have just created a validation behavior. The same goes for if we created a class for drawing behavior. We will again restrict ourselves to the scope of our class and the limitations of classes. 
@@ -349,7 +353,7 @@ protocol Validatable {
 }
 ```
 
-XCode will now yell at you, since we haven't defined the validation state. Let's transform the enum we had for the state of our textField into one that fits all our textField cases.
+Xcode will now yell at you, since we haven't defined the validation state. Let's transform the enum we had for the state of our textField into one that fits all our textField cases.
 
 ```swift
 enum ValidationState {
@@ -507,7 +511,7 @@ struct PasswordValidator: Validatable {
 }
 ```
 
-Now XCode will yell at us since, we miss the isEmail and hasLetters publisher.
+Now Xcode will yell at us since, we miss the isEmail and hasLetters publisher.
 
 ```swift
 // ... Validatable
@@ -558,7 +562,7 @@ Now to determine what validaiton we are dealing with in a dynamic way we can cre
 
 ```swift
 enum ValidatorFactory {
-    static func validateForType(type: ValidatorType) -> CustomValidation {
+    static func validateForType(type: ValidatorType) -> Validatable {
         switch type {
         case .email:
             return EmailValidator()
