@@ -633,7 +633,7 @@ So, let me show you two amazing things that we can do to make our code beautiful
 
 ## RawValue
 
-Now, move the conformance to the Validator protocol into the CustomTextField class instead. Why? The're is no reason to keep the validation that will be applied to the CustomTextField outside of CustomTextField, I have also seen this in production code. 
+Now, move the conformance to the Validator protocol into the CustomTextField class instead. Why? Like mentioned earlier, we don't want to implement validation behavior every time we use a CustomTextField.
 
 ```swift
 // MARK: - Validator
