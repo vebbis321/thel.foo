@@ -1,0 +1,26 @@
+---
+title: "Make Firestore awesome with generics"
+date: 2023-07-30T14:03:42+02:00
+author: "Vebjørn Daniloff"
+description: "This article shows you how you can get rid of boilerplate code in Firestore with Swift"
+draft: false
+tags: ["UIKit", "Advanced", "Firestore", "Firebase", "Generics"]
+categories: ["UIKit"]
+series: ["messenger-clone"]
+lightgallery: true
+---
+
+<!--more-->
+
+## Introduction/Problem
+
+In this episode I want to show you how you can interact with Firestore without a service class. We are going to start with the nonsense service class that you see in most Firestore with UIKit tutorials and turn it in to something really cool.
+
+### Creating the service class
+Like in the last video, we start with the bad approach and then we will go over the limitations before we move on to the solution.
+
+### Validation
+But before we start, we're going to use the Validation repository from the previous video as a starting point, since I don't want to implement a custom text input class from scratch. If you haven't watch that one, we made a custom text input class that can create different instances of itself (name, email, password) and it gives a validation feedback based on the current text input. I'll leave a link to it in the description below.
+
+## UserService
+Okay, cool. Let's create the service class I promised to create. Let's say we wanted to do CRUD operations that were related to a user. 

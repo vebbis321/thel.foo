@@ -32,7 +32,7 @@ Okay, so how do I deal with this problem? I would say that there are three appro
 
 The first and the worst (sick rhymes) approach would be to focus on subclassing. What do I mean by that?
 
-Let's say you created a textField for the email input.  
+Let's say you created a textField for the email input. 
 
 ```swift
 class EmailTextField: UIView {
@@ -332,7 +332,7 @@ And in the CustomTextField:
 private var focusState: FocusState = .inActive
 ```
 
-### The Delegate
+### The delegate
 
 Okay so where do we set the focusState? The state has to be set when the textField editing did begin  (textFieldDidBeginEditing), and it has to be disabled when editing has ended (textFieldDidEndEditing). These two methods are owned by the UITextField, but they can be used by any class of our choice. To tell the UITextField that our CustomTextField can use these methods we have to assign our CustomTextField as the UITextField's delegate.
 
@@ -385,7 +385,17 @@ private func focusStateChanged() {
 }
 ```
 
-Now run the code and see our textField responding to the focusState.
+Now run the code and see our textFields responding to their focusState.
+![TestViewController](custom-textField-impl.gif)
 
--Finn.no
+## Conclusion
 
+I hope you found this article useful for creating a more advanced textField. In the next article we are going to further improve our CustomTextField by developing a validation behavior with Combine.
+
+**Useful Links:**
+- If you prefer video
+- [Link to CustomTextField repo](https://github.com/vebbis321/CustomTextField)
+- [A customized textField made in production](https://github.com/finn-no/FinniversKit/blob/master/FinniversKit/Sources/Components/TextField/TextField.swift)
+- A more advanced implementation
+
+Thank you for reading!

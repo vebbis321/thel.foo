@@ -15,7 +15,7 @@ lightgallery: true
 
 ## Introduction/Problem
 
-Hey, and welcome back to the channel. In this video I want to show you how you can create a powerful text validation in UIKit with Combine. We are going to turn the nonsense ViewModel you see in most validation with Combine tutorials and turn it to something amazing.
+Hey, and welcome back to the channel. In this video I want to show you how you can create a powerful text validation in UIKit with Combine. We are going to start with the nonsense ViewModel you see in most validation with Combine tutorials and turn it to something amazing.
 
 ### Creating the ViewModel
 To show you why the approach most tutorials take on this subject is a bad approach -- I think we should actually program out their solution. Then I'll explain to you to the limitations I met with their solution in the Messenger clone application and then we turn the bad code into something amazing.
