@@ -1,8 +1,8 @@
 ---
-title: "How I handle advanced text input classes in UIKit"
+title: "How I handle similar advanced text input classes in UIKit"
 date: 2023-07-15T17:28:41+02:00
 author: "Vebjørn Daniloff"
-description: "This article shows you how you can handle advanced classes with text input in
+description: "This article shows you how you can handle similar advanced text input classes in
 UIKit"
 draft: false
 tags: ["UIKit", "Advanced", "UITextField"]
@@ -15,24 +15,24 @@ lightgallery: true
 
 ## Introduction/Problem
 
-In this blog post I want to show you how I deal with advanced textFields that are similar. What do I mean by that?
+In this blog post I want to show you how I deal with advanced text fields that are similar. What do I mean by that?
 
-Let's say your client wanted you to make textFields for various inputs in an authentication flow -- A textField for the name input, the date input, the password input, etc. What is usually the case is that these textFields will now follow similar rules for their layout: backgroundColor, font, borderColor etc. like in the example below.
+Let's say your client wanted you to make text fields for various inputs in an authentication flow -- A text field for the name input, the date input, the password input, etc. What is usually the case is that these text fields will now follow similar rules for their layout: `backgroundColor`, `font`, `borderColor` etc. Like in the example below.
 
 ![Email and password](email-and-password-text-field.jpeg)
 ![Name](name-text-field.jpeg)
 
 
-Also! I'm referring to all these components as a "textField", but they are either a UIStackView or UIView that acts as a container for the UITextField. They may also hold other components like a UIButton for clearing, maybe one of them has another UIView for the backgroundColor and so on - You get the idea, it would be hard to create an advanced textField with only the UITextField class itself.
+Also! I'm referring to all these components as a "text field", but they are either a `UIStackView` or `UIView` that acts as a container for the `UITextField`. They may also hold other components like a `UIButton` for clearing, maybe one of them has another `UIView` for the `backgroundColor` and so on - You get the idea, it would be hard to create an advanced text field with only the `UITextField` class itself.
 
 
-Okay, so how do I deal with this problem? I would say that there are three approaches in my mind that you can take; one bad, one that is kind of bad and one that is great.
+Okay, so how do I deal with this problem? I would say that there are three approaches in my mind that you can take: one bad, one that is kind of bad and one that is great.
 
 ### Subclassing
 
 The first and the worst (sick rhymes) approach would be to focus on subclassing. What do I mean by that?
 
-Let's say you created a textField for the email input. 
+Let's say you created a text field for the email input. 
 
 ```swift
 class EmailTextField: UIView {
@@ -43,7 +43,7 @@ class EmailTextField: UIView {
 }
 ```
 
-Now we can create a textField that represents a password input with the same layout by subclassing, but it also needs independent methods, and since it is a PasswordTextField it doesn't need the doSomEmailMethod. To cancel the doSomEmailMethod we just override it.
+Now we can create a text field that represents a password input with the same layout by subclassing, but it also needs independent methods, and since it is a `PasswordTextField` it doesn't need the `doSomEmailMethod`. To cancel the `doSomEmailMethod` we just override it.
 
 ```swift
 class PasswordTextField: EmailTextField {
@@ -55,19 +55,19 @@ class PasswordTextField: EmailTextField {
 }
 ```
 
-Why is this bad? The problem now is that every change in the EmailTextField will affect the PasswordTextField. This approach also gets incrementally worse. Why? What if we created a textField for the name input (NameTextField) and used the PasswordTextField as the superclass? Now the NameTextField is affected by the changes in PasswordTextField which is affected by the changes in the EmailTextField. This leads to no clear separation and is considered bad practice.
+Why is this bad? The problem now is that every change in the `EmailTextField` will affect the `PasswordTextField`. This approach also gets incrementally worse. Why? What if we created a text field for the name input (`NameTextField`) and used the `PasswordTextField` as the superclass? Now the `NameTextField` is affected by the changes in `PasswordTextField` which is affected by the changes in the `EmailTextField`. This leads to no clear separation and is considered bad practice.
 
 ### Write them from scratch
 If you wrote all the classes from scratch you will achieve clear separation between the classes and they will not depend on each other. So why is this bad? The reason is that we now have a lot of unnecessary code duplication. We know that all of these classes have similar setup, so there must be a better way.
 
-### Use custom configuration for each textField
-This is the best approach, we can create a dynamic configuration that will set up each of these textFields differently when we create an instance of them, but they will still use the same class. I use this in the Messenger clone application and this is common in production code.
+### Use custom configuration for each text field
+This is the best approach. We can create a dynamic configuration that will set up each of these text fields differently when we create an instance of them, but they will still use the same class. I use this in the [MessengerClone](https://github.com/vebbis321/MessengerClone) application and this is common in production code.
 
 ## SwiftUI preview 
 
-It would seem foolish in this case to build the project in the simulator for each little change that we would make in our class, so let's configure the SwiftUI preview to work with our UIKit code.
+It would seem foolish in this case to build the project in the simulator for each little change that we would make in our class, so let's configure the `SwiftUI` preview to work with our `UIKit` code.
 
-Since we want to view multiple instances of the same textField, a preview for a UIViewController that displays all our textFields would improve our workflow.
+Since we want to view multiple instances of the same text field, a preview for a `UIViewController` that displays all our text fields would improve our workflow.
 
 ```swift
 import SwiftUI
@@ -108,7 +108,7 @@ final class CustomTextField: UIView {
         let textField = UITextField(frame: .zero)
         textField.textColor = .label
         textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+        return text field
     }()
     
     private lazy var textFieldBackgroundView: UIView = {
@@ -134,16 +134,16 @@ final class CustomTextField: UIView {
     private func setup() {
         
         addSubview(textFieldBackgroundView)
-        textFieldBackgroundView.addSubview(textField)
+        textFieldBackgroundView.addSubview(text field)
         
-        // use the intrinsic height of the UITextField to configure top and bottom for the textFieldBackgroundView
+        // use the intrinsic height of the UITextField to configure top and bottom for the text fieldBackgroundView
         textFieldBackgroundView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         textFieldBackgroundView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        textFieldBackgroundView.topAnchor.constraint(equalTo: textField.topAnchor, constant: -9).isActive = true
-        textFieldBackgroundView.bottomAnchor.constraint(equalTo: textField.bottomAnchor, constant: 9).isActive = true
+        textFieldBackgroundView.topAnchor.constraint(equalTo: text field.topAnchor, constant: -9).isActive = true
+        textFieldBackgroundView.bottomAnchor.constraint(equalTo: text field.bottomAnchor, constant: 9).isActive = true
         
-        textField.leftAnchor.constraint(equalTo: textFieldBackgroundView.leftAnchor, constant: 6).isActive = true
-        textField.rightAnchor.constraint(equalTo: textFieldBackgroundView.rightAnchor, constant: -6).isActive = true
+        textFieldield.leftAnchor.constraint(equalTo: text fieldBackgroundView.leftAnchor, constant: 6).isActive = true
+        textFieldield.rightAnchor.constraint(equalTo: text fieldBackgroundView.rightAnchor, constant: -6).isActive = true
         
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalTo: textFieldBackgroundView.heightAnchor).isActive = true
@@ -152,7 +152,7 @@ final class CustomTextField: UIView {
 ```
 *If you are curious on how I structure my Swift files; [How I structure my folders and Swift files.](https://google.com)*
 
-Now we can preview our textFields in a viewController.
+Now we can preview our text fields in a `UIViewController`.
 
 ```swift
 class TestViewController: UIViewController {
@@ -197,17 +197,17 @@ struct TestViewController_Previews: PreviewProvider {
 
 ```
 
-If your run the code, you realize that all our instances of CustomTextField produce the same textField.
-So how can we make our instances dynamic? One option is to create variables that resembles the properties of our textField:
+If your run the code, you realize that all our instances of `CustomTextField` produce the same text field.
+So how can we make our instances dynamic? One option is to create variables that resembles the properties of our text field:
 
 ```swift
-lazy var textField: UITextField = {
+lazy var text field: UITextField = {
     let textField = UITextField(frame: .zero)
     textField.textColor = .label
     textField.isSecureTextEntry = isSecure // here
     textField.placeholder = placeholder // and here
     textField.translatesAutoresizingMaskIntoConstraints = false
-    return textField
+    return text field
 }()
 
 var isSecure: Bool
@@ -220,11 +220,11 @@ init(isSecure: Bool, placeholder: String) {
 }
 ```
 
-This seems like a good solution, but as our textField grows in complexity we end up with to many variables and we also don't have an approach for handling individual methods. In other words; we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a struct that is configured by the input of an enum.
+This seems like a good solution, but as our text field grows in complexity we end up with to many variables and we also don't have an approach for handling individual methods. In other words; we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a `struct` that is configured by the input of an `enum`.
 
-### Creating the custom conifguration
+### Creating the custom configuration
 
-We create the enum that we pass to our object:
+We create the `enum` that we pass to our object:
 ```swift
 extension CustomTextField {
     enum Types: String {
@@ -276,7 +276,7 @@ extension CustomTextField {
 }
 ```
 Now this is logical, scalable and you'll find this approach in production code (which I will show you later).
-Let's implement this in our textField.
+Let's implement this in our text field.
 
 ```swift
 private var viewModel: ViewModel
@@ -294,13 +294,13 @@ required init?(coder: NSCoder) {
 private func setup() {
     textField.isSecureTextEntry = viewModel.isSecure
     textField.placeholder = viewModel.placeholder
-    textField.keyboardType = viewModel.keyboardType
-    textField.autocapitalizationType = viewModel.autoCap   
+    text field.keyboardType = viewModel.keyboardType
+    text field.autocapitalizationType = viewModel.autoCap   
     // ...
 }
 ```
 
-And the init of the textFields:
+And the initialization of the text fields:
 
 ```swift
 lazy var nameTextField = CustomTextField(viewModel: .init(type: .name, placeholder: "Custom placeholder"))
@@ -308,7 +308,7 @@ lazy var emailTextField = CustomTextField(viewModel: .init(type: .email))
 lazy var passwordTextField = CustomTextField(viewModel: .init(type: .password))
 ```
 
-Nice! Now we have three different textFields instances, but they are created from the same class. Now you might ask: "But, what about states? How can I show a border if one of the textFields is active?". If you think about it states are a list of possibilities, just like an enum;
+Nice! Now we have three different text fields instances, but they are created from the same class. Now you might ask: "But, what about states? How can I show a border if one of the text fields is active?". If you think about it states are a list of possibilities, just like an `enum`.
 
 ```swift
 extension CustomTextField {
@@ -327,20 +327,20 @@ extension CustomTextField {
 }
 ```
 
-And in the CustomTextField:
+And in the `CustomTextField`:
 ```swift
 private var focusState: FocusState = .inActive
 ```
 
 ### The delegate
 
-Okay so where do we set the focusState? The state has to be set when the textField editing did begin  (textFieldDidBeginEditing), and it has to be disabled when editing has ended (textFieldDidEndEditing). These two methods are owned by the UITextField, but they can be used by any class of our choice. To tell the UITextField that our CustomTextField can use these methods we have to assign our CustomTextField as the UITextField's delegate.
+Okay so where do we set the `focusState`? The state has to be set when the text field editing did begin  (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods we have to assign our `CustomTextField` as the `UITextField`'s delegate.
 
 ```swift
-textField.delegate = self // self is CustomTextField
+text field.delegate = self // self is CustomTextField
 ```
 
-Now XCode will yell at you because our CustomTextField isn't capable of handling the delegate methods of a UITextField. So we need it to conform to the UITextFieldDelegate.
+Now XCode will yell at you because our `CustomTextField` isn't capable of handling the delegate methods of a `UITextField`. So we need it to conform to the `UITextFieldDelegate`.
 
 ```swift
 extension CustomTextField: UITextFieldDelegate {
@@ -362,11 +362,11 @@ extension CustomTextField: UITextFieldDelegate {
 }
 ```
 
-Nice. Now the UITextField will notify our CustomTextField class every time the textField is in focus and when editing stopped.
+Nice. Now the `UITextField` will notify our `CustomTextField` class every time the text field is in focus and when editing stopped.
 
 ### Handling state 
 
-But now nothing happens when the state changes. We need some method that can respond in relation to changes in the focusState. So how can we do that?. If we attach a didSet property observer to the focusState it will execute code whenever the property changes, which is exactly what we want, because we want to trigger a method for handling new changes when our state changes.
+But now nothing happens when the state changes. We need some method that can respond in relation to changes in the `focusState`. So how can we do that?. If we attach a `didSet` property observer to the `focusState` it will execute code whenever the property changes, which is exactly what we want, because we want to trigger a method for handling new changes when our state changes.
 
 ```swift
 private var focusState: FocusState = .inActive {
@@ -385,17 +385,17 @@ private func focusStateChanged() {
 }
 ```
 
-Now run the code and see our textFields responding to their focusState.
-![TestViewController](custom-textField-impl.gif)
+Now run the code and see our text fields responding to their `focusState`.
+![TestViewController](custom-text-field-impl.gif)
 
 ## Conclusion
 
-I hope you found this article useful for creating a more advanced textField. In the next article we are going to further improve our CustomTextField by developing a validation behavior with Combine.
+I hope you found this article useful for creating a more advanced text field. In the next article we are going to further improve our `CustomTextField` by developing a validation behavior with `Combine`.
 
 **Useful Links:**
 - If you prefer video
 - [Link to CustomTextField repo](https://github.com/vebbis321/CustomTextField)
-- [A customized textField made in production](https://github.com/finn-no/FinniversKit/blob/master/FinniversKit/Sources/Components/TextField/TextField.swift)
+- [A customized text field made in production](https://github.com/finn-no/FinniversKit/blob/master/FinniversKit/Sources/Components/TextField/TextField.swift)
 - A more advanced implementation
 
 Thank you for reading!
