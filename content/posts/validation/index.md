@@ -15,16 +15,16 @@ lightgallery: true
 
 ## Introduction/Problem
 
-Hey, and welcome back to the channel. In this video I want to show you how you can create a powerful text validation in UIKit with Combine. We are going to start with the nonsense ViewModel you see in most validation with Combine tutorials and turn it to something amazing.
+In this article I want to show you how you can create a powerful text validation in UIKit with Combine. We are going to start with the nonsense ViewModel you see in most validation with Combine tutorials and turn it to something amazing.
 
 ### Creating the ViewModel
-To show you why the approach most tutorials take on this subject is a bad approach -- I think we should actually program out their solution. Then I'll explain to you to the limitations I met with their solution in the Messenger clone application and then we turn the bad code into something amazing.
+To show you why the approach most tutorials take on this subject is a bad approach -- I think we should actually program out their solution. Then I'll explain to you to the limitations I met with their solution in the [Messenger Clone application](https://github.com/vebbis321/MessengerClone) and then we turn the bad code into something amazing.
 
 ### CustomTextField
-But before we start, we're going to use the CustomTextField from the previous video to perform our validation. If you didn't watch that one, it's just a custom class for a textField that can create different instances of itself (name, email, password). So I'm going to use the repository from the last video as a starting point for this one and I'll leave a link to it in the description below.
+But before we start, we're going to use the `CustomTextField` from the previous article to perform our validation. If you didn't read that one, it's just a custom class for a text field that can create different instances of itself (name, email, password). So I'm going to use the completed [repository](https://github.com/vebbis321/CustomTextField) from the last article as a starting point for this one.
 
 ## NameViewModel
-Okay, cool. Now lets get back to the ViewModel I promised to create. So let's say that we wanted to validate that the user typed in a valid name in our custom textField. 
+Okay, cool. Now lets get back to the ViewModel I promised to create. So let's say that we wanted to validate that the user typed in a valid name in our custom text field. 
 
 ```swift
 final class NameViewModel {
@@ -32,7 +32,7 @@ final class NameViewModel {
 }
 ```
 
-Now since we have a NameViewModel, let's rename the TestViewController to a NameViewController and pretend that it is our screen for a name validaiton.
+Now since we have a `NameViewModel`, let's rename the `TestViewController` to a `NameViewController` and pretend that it is our screen for a name validation.
 
 ```swift
 final class NameViewModel {
@@ -170,7 +170,7 @@ What is nice about this approach is that we're receiving the current state of al
 
 Now you may ask, why a function? Often we don't want to give error feedback to the user before a button is tapped. So a method that we can trigger when it fits us is more suitable.
 
-All we have to do now is bind the textField to the name publisher property in our code. Let's extend the functionality of the textField so it can return us a publisher with the current text input:
+All we have to do now is bind the text field to the name publisher property in our code. Let's extend the functionality of the text field so it can return us a publisher with the current text input:
 
 ```swift
 // UITextField + Extensions

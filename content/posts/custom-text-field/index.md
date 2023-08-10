@@ -65,7 +65,7 @@ This is the best approach. We can create a dynamic configuration that will set u
 
 ## SwiftUI preview 
 
-It would seem foolish in this case to build the project in the simulator for each little change that we would make in our class, so let's configure the `SwiftUI` preview to work with our `UIKit` code.
+It would seem foolish in this case to build the project in the simulator for each little change that we would make in our class, so let's configure the SwiftUI preview to work with our UIKit code.
 
 Since we want to view multiple instances of the same text field, a preview for a `UIViewController` that displays all our text fields would improve our workflow.
 
@@ -139,11 +139,11 @@ final class CustomTextField: UIView {
         // use the intrinsic height of the UITextField to configure top and bottom for the text fieldBackgroundView
         textFieldBackgroundView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         textFieldBackgroundView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        textFieldBackgroundView.topAnchor.constraint(equalTo: text field.topAnchor, constant: -9).isActive = true
-        textFieldBackgroundView.bottomAnchor.constraint(equalTo: text field.bottomAnchor, constant: 9).isActive = true
+        textFieldBackgroundView.topAnchor.constraint(equalTo: textField.topAnchor, constant: -9).isActive = true
+        textFieldBackgroundView.bottomAnchor.constraint(equalTo: textField.bottomAnchor, constant: 9).isActive = true
         
-        textFieldield.leftAnchor.constraint(equalTo: text fieldBackgroundView.leftAnchor, constant: 6).isActive = true
-        textFieldield.rightAnchor.constraint(equalTo: text fieldBackgroundView.rightAnchor, constant: -6).isActive = true
+        textField.leftAnchor.constraint(equalTo: textFieldBackgroundView.leftAnchor, constant: 6).isActive = true
+        textField.rightAnchor.constraint(equalTo: textFieldBackgroundView.rightAnchor, constant: -6).isActive = true
         
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalTo: textFieldBackgroundView.heightAnchor).isActive = true
@@ -201,7 +201,7 @@ If your run the code, you realize that all our instances of `CustomTextField` pr
 So how can we make our instances dynamic? One option is to create variables that resembles the properties of our text field:
 
 ```swift
-lazy var text field: UITextField = {
+lazy var textField: UITextField = {
     let textField = UITextField(frame: .zero)
     textField.textColor = .label
     textField.isSecureTextEntry = isSecure // here
@@ -220,11 +220,11 @@ init(isSecure: Bool, placeholder: String) {
 }
 ```
 
-This seems like a good solution, but as our text field grows in complexity we end up with to many variables and we also don't have an approach for handling individual methods. In other words; we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a `struct` that is configured by the input of an `enum`.
+This seems like a good solution, but as our text field grows in complexity we end up with to many variables and we also don't have an approach for handling individual methods. In other words; we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a struct that is configured by the input of an enum.
 
 ### Creating the custom configuration
 
-We create the `enum` that we pass to our object:
+We create the enum that we pass to our object:
 ```swift
 extension CustomTextField {
     enum Types: String {
@@ -294,8 +294,8 @@ required init?(coder: NSCoder) {
 private func setup() {
     textField.isSecureTextEntry = viewModel.isSecure
     textField.placeholder = viewModel.placeholder
-    text field.keyboardType = viewModel.keyboardType
-    text field.autocapitalizationType = viewModel.autoCap   
+    textField.keyboardType = viewModel.keyboardType
+    textField.autocapitalizationType = viewModel.autoCap   
     // ...
 }
 ```
@@ -308,7 +308,7 @@ lazy var emailTextField = CustomTextField(viewModel: .init(type: .email))
 lazy var passwordTextField = CustomTextField(viewModel: .init(type: .password))
 ```
 
-Nice! Now we have three different text fields instances, but they are created from the same class. Now you might ask: "But, what about states? How can I show a border if one of the text fields is active?". If you think about it states are a list of possibilities, just like an `enum`.
+Nice! Now we have three different text fields instances, but they are created from the same class. Now you might ask: "But, what about states? How can I show a border if one of the text fields is active?". If you think about it states are a list of possibilities, just like an enum.
 
 ```swift
 extension CustomTextField {
@@ -337,7 +337,7 @@ private var focusState: FocusState = .inActive
 Okay so where do we set the `focusState`? The state has to be set when the text field editing did begin  (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods we have to assign our `CustomTextField` as the `UITextField`'s delegate.
 
 ```swift
-text field.delegate = self // self is CustomTextField
+textField.delegate = self // self is CustomTextField
 ```
 
 Now XCode will yell at you because our `CustomTextField` isn't capable of handling the delegate methods of a `UITextField`. So we need it to conform to the `UITextFieldDelegate`.
@@ -386,11 +386,12 @@ private func focusStateChanged() {
 ```
 
 Now run the code and see our text fields responding to their `focusState`.
-![TestViewController](custom-text-field-impl.gif)
+
+{{< img src="images/custom-text-field-impl.gif" >}}
 
 ## Conclusion
 
-I hope you found this article useful for creating a more advanced text field. In the next article we are going to further improve our `CustomTextField` by developing a validation behavior with `Combine`.
+I hope you found this article useful for creating a more advanced text field. In the next article we are going to further improve our `CustomTextField` by developing a validation behavior with Combine.
 
 **Useful Links:**
 - If you prefer video
