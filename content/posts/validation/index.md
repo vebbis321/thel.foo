@@ -739,7 +739,7 @@ extension Publisher where Self.Output == String, Failure == Never {
 }
 ```
 
-Copy the part where we handle the pipeline in the `customTextPublisher` and delete the property. Move it into the `startValidation` function and delete the `validateText` call.
+Copy the part where we handle the pipeline in the `customTextPublisher` and delete the property. Move it into the `startValidation` function and replace the `validateText` call.
 
 ```swift
 guard validationState == .idle, let validationType = ValidatorType(rawValue: viewModel.type.rawValue) else { return }
@@ -750,7 +750,7 @@ textField.textPublisher()
     .eraseToAnyPublisher()
 ```
 
-Now remove .eraseToAnyPublisher and add the operator we just created.
+Now remove `.eraseToAnyPublisher` and add the operator we just created.
 
 ```swift
 textField.textPublisher()
@@ -759,3 +759,17 @@ textField.textPublisher()
         .validateText(validationType: validationType)
         .assign(to: &$validationState)
 ```
+
+Beautiful! To recap what this little beautiful code snippet does:
+- Controls the flow of our text before it is validated
+- Validates all our text fields dynamically without us lifting a finger
+- Validates our text with a publisher
+- Assigns the state of our validation to a state thaht reacts to the current state of our text field
+
+We can now also use the validation publisher on any publisher that publishes a string value. How cool is that! I hope you enjoyed this article as much as I did and thank you for reading.
+
+**Useful Links:**
+- If you prefer video
+- [Code repo](https://github.com/vebbis321/Validation)
+
+
