@@ -4,7 +4,7 @@ date: 2023-07-19T18:11:49+02:00
 author: "Vebjørn Daniloff"
 description: "This article shows you how you can validate text with Combine in
 UIKit." 
-draft: true
+draft: false
 tags: ["UIKit", "Combine", "Advanced", "UITextField"]
 categories: ["UIKit", "Combine"]
 series: ["messenger-clone"]

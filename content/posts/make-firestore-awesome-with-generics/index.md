@@ -3,7 +3,7 @@ title: "Make Firestore awesome with generics"
 date: 2023-07-30T14:03:42+02:00
 author: "Vebjørn Daniloff"
 description: "This article shows you how you can get rid of boilerplate code in Firestore with Swift"
-draft: false
+draft: true
 tags: ["UIKit", "Advanced", "Firestore", "Firebase", "Generics"]
 categories: ["UIKit"]
 series: ["messenger-clone"]
