@@ -108,7 +108,7 @@ final class CustomTextField: UIView {
         let textField = UITextField(frame: .zero)
         textField.textColor = .label
         textField.translatesAutoresizingMaskIntoConstraints = false
-        return text field
+        return textField
     }()
     
     private lazy var textFieldBackgroundView: UIView = {
@@ -134,7 +134,7 @@ final class CustomTextField: UIView {
     private func setup() {
         
         addSubview(textFieldBackgroundView)
-        textFieldBackgroundView.addSubview(text field)
+        textFieldBackgroundView.addSubview(textField)
         
         // use the intrinsic height of the UITextField to configure top and bottom for the text fieldBackgroundView
         textFieldBackgroundView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -150,7 +150,7 @@ final class CustomTextField: UIView {
     }
 }
 ```
-*If you are curious on how I structure my Swift files; [How I structure my folders and Swift files.](https://google.com)*
+*If you are curious on how I structure my Swift files: [How I structure my folders and Swift files.](https://google.com)*
 
 Now we can preview our text fields in a `UIViewController`.
 
@@ -207,7 +207,7 @@ lazy var textField: UITextField = {
     textField.isSecureTextEntry = isSecure // here
     textField.placeholder = placeholder // and here
     textField.translatesAutoresizingMaskIntoConstraints = false
-    return text field
+    return textField
 }()
 
 var isSecure: Bool
@@ -275,7 +275,7 @@ extension CustomTextField {
     }
 }
 ```
-Now this is logical, scalable and you'll find this approach in production code (which I will show you later).
+Now this is logical, scalable and you'll find this approach in [production code](https://github.com/finn-no/FinniversKit/tree/09378a4068b6d15484b4927163302b3c7ba88dd4/FinniversKit/Sources/Components/TextField) .
 Let's implement this in our text field.
 
 ```swift
@@ -334,7 +334,7 @@ private var focusState: FocusState = .inActive
 
 ### The delegate
 
-Okay so where do we set the `focusState`? The state has to be set when the text field editing did begin  (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods we have to assign our `CustomTextField` as the `UITextField`'s delegate.
+Okay so where do we set the `focusState`? The state has to be set when the editing of the text field did begin  (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods we have to assign our `CustomTextField` as the `UITextField`'s delegate.
 
 ```swift
 textField.delegate = self // self is CustomTextField
@@ -366,7 +366,7 @@ Nice. Now the `UITextField` will notify our `CustomTextField` class every time t
 
 ### Handling state 
 
-But now nothing happens when the state changes. We need some method that can respond in relation to changes in the `focusState`. So how can we do that?. If we attach a `didSet` property observer to the `focusState` it will execute code whenever the property changes, which is exactly what we want, because we want to trigger a method for handling new changes when our state changes.
+But now nothing happens when the state changes. We need some method that can respond in relation to changes in the `focusState`. So how can we do that?. If we attach a `didSet` property observer to the `focusState` it will execute code whenever the property had changed, which is exactly what we want --  because we want to trigger a method for handling new changes when our state has changed.
 
 ```swift
 private var focusState: FocusState = .inActive {
