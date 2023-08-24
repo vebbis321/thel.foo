@@ -15,9 +15,9 @@ lightgallery: true
 
 ## Introduction/Problem
 
-In this blog post I want to show you how I deal with advanced text fields that are similar. What do I mean by that?
+In this blog post, I want to show you how I deal with advanced text fields that are similar. What do I mean by that?
 
-Let's say your client wanted you to make text fields for various inputs in an authentication flow -- A text field for the name input, the date input, the password input, etc. What is usually the case is that these text fields will now follow similar rules for their layout: `backgroundColor`, `font`, `borderColor` etc. Like in the example below.
+Let's say your client wanted you to make text fields for various inputs in an authentication flow -- A text field for the name input, the date input, the password input, etc. What is usually the case is that these text fields will now follow similar rules for their layout: `backgroundColor`, `font`, `borderColor`, etc. Like in the example below.
 
 ![Email and password](email-and-password-text-field.jpeg)
 ![Name](name-text-field.jpeg)
@@ -53,15 +53,15 @@ class PasswordTextField: EmailTextField {
 }
 ```
 
-Why is this bad? The problem now is that every change in the `EmailTextField` will affect the `PasswordTextField`. This approach also gets incrementally worse. Why? What if we created a text field for the name input (`NameTextField`) and used the `PasswordTextField` as the superclass? Now the `NameTextField` is affected by the changes in `PasswordTextField` which is affected by the changes in the `EmailTextField`. This leads to no clear separation and is considered bad practice.
+Why is this bad? The problem now is that every change in the `EmailTextField` will affect the `PasswordTextField`. This approach also gets incrementally worse.  Why? What if we created a text field for the name input (`NameTextField`) and used the `PasswordTextField` as the superclass? Now the `NameTextField` is affected by the changes in `PasswordTextField` which is affected by the changes in the `EmailTextField`. This leads to no clear separation and is considered bad practice.
 
 ### Write them from scratch
 
-If you wrote all the classes from scratch you will achieve clear separation between the classes and they will not depend on each other. So why is this bad? The reason is that we now have a lot of unnecessary code duplication. We know that all of these classes have similar setup, so there must be a better way.
+If you wrote all the classes from scratch you will achieve clear separation between them, and they will not depend on each other. So why is this bad? The reason is that we now have a lot of unnecessary code duplication. We know that all of these classes have similar setup, so there must be a better way.
 
 ### Use custom configuration for each text field
 
-This is the best approach. We can create a dynamic configuration that will set up each of these text fields differently when we create an instance of them, but they will still use the same class. I use this in the [MessengerClone](https://github.com/vebbis321/MessengerClone) application and this is common in production code.
+This is the best approach. We can pass a configuration that can dynamically configure the text fields individually when we create an instance of them, but they will still use the same class. I use this in the [Messenger clone](https://github.com/vebbis321/MessengerClone) application, and it's common in production code.
 
 ## SwiftUI preview
 
@@ -221,7 +221,7 @@ init(isSecure: Bool, placeholder: String) {
 }
 ```
 
-This seems like a good solution, but as our text field grows in complexity we end up with to many variables and we also don't have an approach for handling individual methods. In other words; we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a struct that is configured by the input of an enum.
+This seems like a good solution, but as our text field grows in complexity we end up with to many variables -- and we also don’t have an approach for handling individual methods. In other words, we need a light object with all our properties, but the logic of our properties/methods should be determined by some input case. Whether you realize it or not, we just described a struct that is configured by the input of an enum.
 
 ### Creating the custom configuration
 
@@ -338,7 +338,7 @@ private var focusState: FocusState = .inActive
 
 ### The delegate
 
-Okay so where do we set the `focusState`? The state has to be set when the editing of the text field did begin (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods we have to assign our `CustomTextField` as the `UITextField`'s delegate.
+Okay so where do we set the `focusState`? The state has to be set when the editing of the text field did begin (`textFieldDidBeginEditing`), and it has to be disabled when editing has ended (`textFieldDidEndEditing`). These two methods are owned by the `UITextField`, but they can be used by any class of our choice. To tell the `UITextField` that our `CustomTextField` can use these methods, we have to assign our `CustomTextField` as the `UITextField`'s delegate.
 
 ```swift
 textField.delegate = self // self is CustomTextField

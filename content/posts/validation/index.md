@@ -15,19 +15,19 @@ lightgallery: true
 
 ## Introduction/Problem
 
-In this article I want to show you how you can create a powerful text validation in UIKit with Combine. We're going to start with the nonsense ViewModel you see in most validation with Combine tutorials and turn it to something amazing.
+In this article I want to show you how you can create a powerful text validation in UIKit with Combine. We're going to start with the nonsense view model you see in most validation with Combine tutorials and turn it to something amazing.
 
-### Creating the ViewModel
+### Creating the view model
 
 To show you why the approach most tutorials take on this subject is a bad approach -- I think we should actually program out their solution. Then I'll explain to you to the limitations I met with their solution in the [Messenger Clone application](https://github.com/vebbis321/MessengerClone) and then we turn the bad code into something amazing.
 
 ### CustomTextField
 
-Before we start, we're going to use the `CustomTextField` from the previous article to perform our validation. If you didn't read that one, it's just a custom class for a text field that can create different instances of itself (name, email, password). So I'm going to use the completed [repository](https://github.com/vebbis321/CustomTextField) from the last article as a starting point for this one.
+Before we start, we're going to use the `CustomTextField` from the previous article to perform our validation. If you didn't read that one, it's just a custom class for a text field that can create different instances of itself (name, email, password). So I'm going to use the completed [repository](https://github.com/vebbis321/CustomTextField) from the last article, as a starting point for this one.
 
 ## NameViewModel
 
-Okay, cool. Now lets get back to the ViewModel I promised to create. So lets say that we wanted to validate that the user typed in a valid name in our custom text field.
+Now, let's go back to the view model I promised to create. So, say that we wanted to validate that the user typed in a valid name in our custom text field.
 
 ```swift
 final class NameViewModel {
@@ -35,7 +35,7 @@ final class NameViewModel {
 }
 ```
 
-Now since we have a `NameViewModel`, lets rename the `TestViewController` to a `NameViewController` and pretend that it is our screen for a name validation.
+Since we have a `NameViewModel`, lets rename the `TestViewController` to a `NameViewController` and pretend that it is our screen for a name validation.
 
 ```swift
 class NameViewController: UIViewController {
@@ -151,7 +151,7 @@ extension String {
 }
 ```
 
-To combine all the states and translate them into the current state, let's create a new publisher that will start the validation
+To combine all the states and translate them into the current state, let's create a new publisher that will start the validation.
 
 ```swift
  func startValidation() {
@@ -173,11 +173,11 @@ To combine all the states and translate them into the current state, let's creat
     }
 ```
 
-What is nice about this approach is that we're receiving the current state of all our validations concurrently and we can use the tuple output that we get in return from them to create a error hierarchy.
+What is nice about this approach is that we're receiving the current state of all our validations concurrently -- and we can use the tuple output that we get in return from them to create a error hierarchy.
 
-Now you may ask, why a function? Often we don't want to give error feedback to the user before a button is tapped. So a method that we can trigger when it fits us is more suitable.
+Now you may ask, why a function? Often, we don't want to give error feedback to the user before a button is tapped. So, a method that we can trigger when it fits us is more suitable.
 
-All we have to do now is bind the text field to the name publisher property in our code. Let's extend the functionality of the text field so it can return us a publisher with the current text input:
+All we have to do now is bind the text field to the name publisher property in our code. So, let's extend the functionality of the text field so it can return us a publisher with the current text input:
 
 ```swift
 // UITextField + Extensions
@@ -250,7 +250,7 @@ func validationStateChanged(state: NameViewModel.NameState) {
  }
 ```
 
-Nice! But now our code won't compile because we haven't implemented the `errorLabel` and we don't have an container that can take care of showing and hiding our `errorLabel`. So let's implement the `errorLabel` first:
+Nice! But our code still won't compile because we haven't implemented the `errorLabel` -- and we don't have a container that can show and hide our `errorLabel`. So let's implement the `errorLabel` first:
 
 ```swift
 private lazy var errorLabel: UILabel = {
@@ -267,7 +267,9 @@ private lazy var errorLabel: UILabel = {
 
 ### Hiding and showing the error label
 
-So how do you show and hide views in UIKit? The best way is by using a `UIStackView`. Why? A `UIStackView` is much more flexible because it will offer you automatic constraints when you hide and show views. This also applies if the process of hiding/showing views are done with an animation -- which makes the `UIStackView` perfect for the job.
+So how do you show and hide views in UIKit? The best way is by using a `UIStackView`. Why? A `UIStackView` is much more flexible because of its automatic constraints when you hide and show views.
+
+So, let's create a expanding vertical stack that will hold all our components and show/hide the `errorLabel`.
 
 ```swift
 private lazy var expandingVstack: UIStackView = {
@@ -311,7 +313,7 @@ private func setup() {
 
 ### Updating the height of the CustomTextField
 
-Now our stackView will act as the container for all the subviews in our `CustomTextField` class, which means that it should determine the height. Why? When it shows the validation label it will automatically update its constraints and grow in height. So let's change the `heightAnchor` at the bottom of the setup code:
+Now our `expandingVstack` will act as the container for all the subviews in our `CustomTextField` class, which means that it should determine the height. Why? When it shows the validation label it will automatically update its constraints and grow in height. So let's change the `heightAnchor` at the bottom of the setup code:
 
 ```swift
 heightAnchor.constraint(equalTo: expandingVstack.heightAnchor).isActive = true
@@ -323,18 +325,18 @@ Nice. Now run the code and see the `errorLabel` conditionally return us an error
 
 ### Duplication
 
-The first problem I faced by using a ViewModel I had to duplicate the validation process for each screen. Why? Each validation was now in the scope of a single ViewModel, and that ViewModel was tightly coupled with the ViewController for that screen -- `NameViewModel` with `NameViewController`, `EmailViewModel` with `EmailViewController` etc.
+The first problem I faced by using a view model is that I had to duplicate the validation process for each screen. Why? Each validation was now in the scope of a single view model, and that view model was tightly coupled with the view controller for that screen -- `NameViewModel` with `NameViewController`, `EmailViewModel` with `EmailViewController` etc.
 
-### Forcing a ViewModel
+### Forcing a view model
 
-The second problem was that the ViewModel felt more forced, what do I mean by that:
+The second problem was that the view model felt more forced, what do I mean by that:
 
 - In production code I found the validation code in the class for the custom text fields. Which makes a lot more sense. Why? If it's outside our text field we have to implement it every single time we use the text field.
 - The screens were fairly simple, and I didn't need another reference type for the validation of the text input. So I thought there must be a better way. And there is!
 
 ## Start with a protocol
 
-Whenever you're developing classes for behavioral purposes and you've created some behavior that's hard to replicate, think protocols. What do I mean by behavioral purposes, think of what we are actually trying to achieve with our `NameViewModel` class. We're not trying to create a layer between us and a specific service class, where we can transform the models into actual data for our view, no, we have just created a validation behavior. The same applies if we created a class for drawing behavior. We will again restrict ourselves to the scope of our class and the limitations of classes.
+Whenever you're developing classes for behavioral purposes, and you've created some behavior that's hard to replicate, think protocols. What do I mean by behavioral purposes -- think of what we are actually trying to achieve with our `NameViewModel` class. We're not trying to create a layer between us and a specific service class where we can transform the models into actual data for our view. No, we have only built a validation behavior. The same applies if we created a class for drawing behavior. We will again restrict ourselves to the scope of our class and the limitations of classes.
 
 ### Protocol-oriented programming
 
@@ -342,7 +344,7 @@ In [WWDC 2015 apple introduced Protocol-oriented programming](https://www.youtub
 
 ### Validatable
 
-Like Apple says, don't start with a class, start with a protocol. So, let's define a blueprint of the expected behavioral for all validations. We want them to execute a function on a text publisher and use filters to return a state that we can deal with. Since we're refactoring the `NameViewModel`, you can think of it as an abstraction of the behavior of our `startValidation` function.
+Like Apple says, don't start with a class, start with a protocol. So, let's define a blueprint of the expected behavioral for all validations. We want them to execute a function on a text publisher and use filters to return a state we can deal with. Since we're refactoring the `NameViewModel`, you can think of it as an abstraction of the behavior of our `startValidation` function.
 
 ```swift
 protocol Validatable {
@@ -509,7 +511,7 @@ struct PasswordValidator: Validatable {
 }
 ```
 
-Now Xcode will yell at us since, we miss the `isEmail` and `hasLetters` publisher.
+Now Xcode will yell at us, since we miss the `isEmail` and `hasLetters` publisher.
 
 ```swift
 // ... Validatable
@@ -534,7 +536,7 @@ func isValidEmail() -> Bool {
 }
 ```
 
-To make use of our validations, let's create a protocol, so that if a class conforms to the protocol, it now has the capability to use the methods of our custom `Validatable` objects. Like if a class conform to the `UITextFieldDelegate` it now have to capability to use the methods of the `UITextFieldDelegate`.
+To make use of our validations, let's create a protocol, so that if a class conforms to the protocol, it now has the capability to use the methods of our custom `Validatable` objects.
 
 ```swift
 protocol Validator {
@@ -557,7 +559,7 @@ enum ValidatorType {
 
 ### ValidationFactory
 
-Now to determine what validaiton we are dealing with in a dynamic way we can create a factory and use our enum as the input type.
+To handle it dynamically, we can create a factory and use our enum as the input type.
 
 ```swift
 enum ValidatorFactory {
@@ -574,7 +576,7 @@ enum ValidatorFactory {
 }
 ```
 
-Now to finish our publisher, we can create a default implementation of the `validateText` function so we don't have to implement each time we conform to the `Validator` protocol.
+To finish our publisher, we can create a default implementation of the `validateText` function so we don't have to implement it each time we conform to the `Validator` protocol.
 
 ```swift
 extension Validator {
@@ -626,13 +628,13 @@ extension NameViewController: Validator {
 }
 ```
 
-Awesome! We now have the same validation behavior, but we can choose from multiple validations and we have removed the unnecessary `NameViewModel` class. However I'm actually still not satisfied with our solution -- Because now we have to implement the validation every time we use the `CustomTextField`.
+Awesome! We now have the same validation behavior, but we can choose from multiple validations, and we have removed the unnecessary `NameViewModel` class. However I'm still not satisfied with our solution. Because now, we have to implement the validation every time we use the `CustomTextField`.
 
 So, let me show you two amazing things that we can do to make our code beautiful.
 
 ## RawValue
 
-Now, move the conformance to the `Validator` protocol into the `CustomTextField` class instead. Why? Like I mentioned earlier, we don't want to implement validation behavior every time we use a `CustomTextField`.
+First, move the conformance to the `Validator` protocol into the `CustomTextField` class instead. Why? As I mentioned earlier, we don't want to implement validation behavior every time we use a `CustomTextField`.
 
 ```swift
 // MARK: - Validator
@@ -651,7 +653,7 @@ extension CustomTextField: Validator {
 
 And remove all the validation code in `viewDidLoad`.
 
-Now since we know that the enum `CustomTextFieldType` has the same cases as our `ValidationType` enum, and it is big chance that it stays that way, we can actually transform one enum into the other. Then you might ask: Why don't just use one for both? Even though we duplicate the naming cases, I still think we have better code with two enums -- since one should belong to the `CustomTextField` class and one should be for the `ValidationType`. If we didn't use two enums the naming would be `CustomTextFieldValidationType` which doesn't make sense. So let me show you what we can do with the `rawValue`.
+Now since we know that the enum `CustomTextFieldType` has the same cases as our `ValidationType` enum, and it is big chance that it stays that way, we can actually transform one enum into the other. Then you might ask: "Why can't we use one for both?". Even though we duplicate the naming cases, I still think we have better code with two enums -- since one should belong to the `CustomTextField` class and one should be for the `ValidationType`. If we didn't use two enums the naming would be `CustomTextFieldValidationType`, which doesn't make sense. So let me show you how we we can do with the `rawValue`.
 
 Assign a string `rawValue` to the `ValidationType`.
 
@@ -663,7 +665,7 @@ enum ValidatorType: String {
 }
 ```
 
-Now remove the hardcoded `.name` in the `validaitonType` of `startValidation()` and replace it with this magic:
+Now remove the hard coded `.name` in the `validaitonType` of `startValidation()` and replace it with this magic:
 
 ```swift
 guard let validationType = ValidatorType(rawValue: viewModel.type.rawValue) else { return}
@@ -675,13 +677,13 @@ validateText(
 //...
 ```
 
-Now all of our text fields chooses their validations dynamically without we having to lift a finger. But before we jump to the final magic we need to make some changes. We need to have a way of telling the parent class of our `CustomTextField` that the validation state has changed. So let's move the validation state that we had in the `NameViewModel` to `CustomTextField`.
+Now, all of our text fields chooses their validations dynamically without we having to lift a finger. But before we jump to the final magic, we need to make some changes. We don't have a way of telling the parent class that the validation state of our text field has changed. So, let's move the validation state we had in the `NameViewModel` into our text field.
 
 ```swift
 @Published var validationState: ValidationState = .idle
 ```
 
-And assign our validation publisher to it. We change the `.sink` subscriber to a `.assign` subscriber and we should do a check to ensure that the state of the validation is .idle (we don't want to start the validation multiple times on the same text field).
+And assign our validation publisher to it. We change the `.sink` subscriber to a `.assign` subscriber, and we should perform a check to ensure that the state of the validation is .idle (we don't want to start the validation multiple times on the same text field).
 
 ```swift
  func startValidation() {
@@ -695,7 +697,7 @@ And assign our validation publisher to it. We change the `.sink` subscriber to a
     }
 ```
 
-Now we don't observe the state changes, so lets use our newly created publisher to set up a listener that observe the state changes.
+Now we don't observe the state changes, so let's use our newly created publisher and listen to its outputs.
 
 ```swift
 // MARK: - listen
@@ -719,7 +721,7 @@ init(frame: CGRect = .zero, viewModel: ViewModel) {
 }
 ```
 
-Now everything is nearly perfect, but we don't have any control on our text publisher. The validation should wait 0.2 seconds so it doesn't send different validation states while the user is typing and remove the duplicates if the user types really fast back and forth. You could solve this by creating a computed property in our text field class:
+Now everything is nearly perfect, but we don't have any control on the pipeline of our text publisher. The validation should wait 0.2 seconds so it doesn't send different validation states while the user is typing, and remove the duplicates if the user types really fast back and forth. You could solve this by creating a computed property in our text field class:
 
 ```swift
 private var customTextPublisher: AnyPublisher<String, Never> {
@@ -772,14 +774,26 @@ textField.textPublisher()
         .assign(to: &$validationState)
 ```
 
-Beautiful! To recap what this little beautiful code snippet does:
+Run the code now, and see all our text fields being validated dynamically:
 
-- Controls the flow of our text before it is validated
-- Validates all our text fields dynamically without us lifting a finger
-- Validates our text with a publisher
-- Assigns the state of our validation to a state thaht reacts to the current state of our text field
+![Simulator screen](images/validation.gif)
 
-We can now also use the validation operator on any publisher that publishes a string value. How cool is that! I hope you enjoyed this article as much as I did and thank you for reading.
+Beautiful! To recap what the little beautiful code snippet above the simulator does:
+
+- Controls the flow of our text before it's validated.
+- Validates all our text fields dynamically without us lifting a finger.
+- Validates our text with a publisher.
+- Assigns the state of our validation to a state that reacts to the current state of our text field.
+
+{{< admonition type=tip title="Validation operator" open=true >}}
+We can now also use the validation operator on any publisher that publishes a string value.
+{{< /admonition >}}
+
+
+
+
+
+How cool is that! I hope you enjoyed this article as much as I did, and thank you for reading.
 
 **Useful Links:**
 
