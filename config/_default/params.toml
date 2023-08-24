@@ -17,7 +17,7 @@ defaultTheme = "black"
         # URL of avatar shown in home page
         # Place your avatar file under static or assets directory
         # The filepath is relative to the static or assets directory
-        avatarURL = "me.png"
+        avatarURL = "images/me.png"
         # URL the avatar links to
         avatarLinkURL = ""
         # DoIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
@@ -40,13 +40,42 @@ defaultTheme = "black"
         # default behavior when you don't set "hiddenFromHomePage" in front matter
         #defaultHiddenFromHomePage = false
 
+
+# Footer config
+# 页面底部信息配置
+[footer]
+  enable = true
+  # Custom content (HTML format is supported)
+  # 自定义内容 (支持 HTML 格式)
+  custom = ''
+  # whether to show Hugo and theme info
+  # 是否显示 Hugo 和主题信息
+  hugo = true
+  # Hosted on (HTML format is supported)
+  # 托管服务信息 (支持 HTML 格式)
+  # <a title="Github Pages" href="https://docs.github.com/en/pages/" target="_blank" rel="noopener noreffer">GitHub Pages</a>
+  hostedOn = ''
+  # whether to show copyright info
+  # 是否显示版权信息
+  copyright = true
+  # whether to show the author
+  # 是否显示作者
+  author = true
+  # site creation time
+  # 网站创立年份
+  since = 2023
+   # license info (HTML format is supported)
+  # 许可协议信息 (支持 HTML 格式)
+
+
  # Social config about the author
 [social]
+    Email = "veb@thel.foo"
+    Youtubechannel = ""
+    Instagram = "veb_thel"
     GitHub = "vebbis321"
-    #Twitter = "xxxx"
-    #Instagram = "xxxx"
-    #Youtubechannel = ""
     Stackoverflow = "13302643"
+    Twitter = "@veb_thel"
 
 [page]
     # DoIt NEW | 0.2.0 whether to hide a page from home page
@@ -74,10 +103,7 @@ defaultTheme = "black"
     # DoIt NEW | 0.2.13 outdated article reminder config
     rssFullText = false
     # whether to enable series navigation
-    # 是否使用系列导航
 
-
-    
     [page.toc]
         # whether to enable the table of the contents
         # 是否使用目录
@@ -86,7 +112,6 @@ defaultTheme = "black"
         # 是否保持使用文章前面的静态目录
         keepStatic = false
         # whether to make the table of the contents in the sidebar automatically collapsed
-        # 是否使侧边目录自动折叠展开
         auto = true
 
     
@@ -158,10 +183,7 @@ defaultTheme = "black"
     highlightTag = "em"
     # whether to use the absolute URL based on the baseURL in search index
     absoluteURL = false
-    [search.algolia]
-#index = "en_index"
-#       appID = "5YGRNRQK1G"
-#       searchKey = "0ff6874805de24b84aa1d5ebccad56cd"
+  
     [search.fuse]
     # https://fusejs.io/api/options.html
         isCaseSensitive = false
