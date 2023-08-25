@@ -50,7 +50,7 @@
     post = ""
     name = ""
     url = "https://github.com/vebbis321"
-    title = "GitHub"
+    title = ""
     weight = 6
 [[main]]
     identifier = "github"
@@ -58,6 +58,6 @@
     post = ""
     name = ""
     url = "https://github.com/vebbis321"
-    title = "GitHub"
+    title = ""
     weight = 7
 

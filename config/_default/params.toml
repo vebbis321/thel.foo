@@ -82,7 +82,7 @@ defaultTheme = "black"
     # DoIt NEW | 0.2.0 whether to hide a page from search results
     hiddenFromSearch = false
     # DoIt NEW | 0.2.0 whether to enable twemoji
-    twemoji = false
+    twemoji = true
     # whether to enable lightgallery
     lightgallery = false
     # DoIt NEW | 0.2.0 whether to enable the ruby extended syntax

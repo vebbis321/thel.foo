@@ -1,4 +1,5 @@
 author = "authors"
 category = "categories"
-tag = "tags"
 series = "series"
+about = "about"
+services = "services"

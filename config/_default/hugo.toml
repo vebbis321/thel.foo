@@ -12,3 +12,4 @@ description = "A blog on iOS development"
 
 enableEmoji = true
 
+ignoreErrors = ["error-output-taxonomy"]
