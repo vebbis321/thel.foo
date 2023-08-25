@@ -45,19 +45,19 @@
     title = ""
     weight = 5
 [[main]]
-  identifier = "youtube"
-  pre = "<i class='fab fa-youtube fa-fw'></i>"
-  post = ""
-  name = ""
-  url = "https://github.com/vebbis321"
-  title = "GitHub"
-  weight = 6
+    identifier = "youtube"
+    pre = "<i class='fab fa-youtube fa-fw'></i>"
+    post = ""
+    name = ""
+    url = "https://github.com/vebbis321"
+    title = "GitHub"
+    weight = 6
 [[main]]
-  identifier = "github"
-  pre = "<i class='fab fa-github fa-fw'></i>"
-  post = ""
-  name = ""
-  url = "https://github.com/vebbis321"
-  title = "GitHub"
-  weight = 7
+    identifier = "github"
+    pre = "<i class='fab fa-github fa-fw'></i>"
+    post = ""
+    name = ""
+    url = "https://github.com/vebbis321"
+    title = "GitHub"
+    weight = 7
 

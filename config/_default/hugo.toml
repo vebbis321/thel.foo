@@ -10,7 +10,5 @@ title = "Thel"
 # site description
 description = "A blog on iOS development"
 
-enableInlineShortcodes = true
-
 enableEmoji = true
 
