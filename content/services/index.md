@@ -1,6 +1,5 @@
 ---
 title: ""
-date: 2019-08-25T11:04:49+08:00
 draft: false
 author: "Vebjørn Daniloff"
 lightgallery: true
