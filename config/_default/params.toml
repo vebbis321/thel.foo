@@ -71,11 +71,10 @@ defaultTheme = "black"
  # Social config about the author
 [social]
     Email = "veb@thel.foo"
-    Youtubechannel = ""
-    Instagram = "veb_thel"
+    Youtubechannel = "yoo"
     GitHub = "vebbis321"
     Stackoverflow = "13302643"
-    Twitter = "@veb_thel"
+    Twitter = "@thel_foo"
 
 [page]
     # DoIt NEW | 0.2.0 whether to hide a page from home page

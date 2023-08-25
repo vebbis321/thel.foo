@@ -1,6 +1,6 @@
 ---
 title: "Advanced text validation in UIKit with Combine."
-date: 2023-07-19T18:11:49+02:00
+date: 2023-08-24T18:11:49+02:00
 author: "Vebjørn Daniloff"
 description: "This article shows you how you can validate text with Combine in
 UIKit." 

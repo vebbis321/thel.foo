@@ -12,10 +12,6 @@ enable: true
 I'm a iOS Developer based in Oslo, Norway. I run my own YouTube channel and this blog. I mostly focus on iOS development, but I love playing around with all
 kinds of technologies.
 
-# Skills
-* Fluent in Swift
-* 
-     
-
+----
 
 

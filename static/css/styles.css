@@ -1,0 +1,9 @@
+.remove_link_colour {
+  a,
+  a:hover,
+  a:focus,
+  a:active {
+    color: inherit;
+    text-decoration: none;
+  }
+}

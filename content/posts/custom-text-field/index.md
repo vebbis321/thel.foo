@@ -1,6 +1,6 @@
 ---
 title: "How I handle similar advanced text input classes in UIKit"
-date: 2023-07-15T17:28:41+02:00
+date: 2023-08-24T17:28:41+02:00
 author: "Vebjørn Daniloff"
 description: "This article shows you how you can handle similar advanced text input classes in
 UIKit"
