@@ -797,5 +797,5 @@ How cool is that! I hope you enjoyed this article as much as I did, and thank yo
 
 **Useful Links:**
 
-- If you prefer video
+- [If you prefer video](https://www.youtube.com/watch?v=qOQLefGUXG0&list=PLDmuKt_q76fd-5n3-MAYH_i1f-z6NfbFJ&index=3)
 - [Code repo](https://github.com/vebbis321/Validation)

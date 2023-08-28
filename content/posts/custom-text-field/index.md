@@ -151,7 +151,7 @@ final class CustomTextField: UIView {
 }
 ```
 
-_If you are curious on how I structure my Swift files: [How I structure my folders and Swift files.](https://google.com)_
+_If you are curious on how I structure my Swift files: [How I structure my folders and Swift files.](https://www.youtube.com/watch?v=glFQZdgghDI)_
 
 Now we can preview our text fields in a `UIViewController`.
 
@@ -399,9 +399,9 @@ I hope you found this article useful for creating a more advanced text field. In
 
 **Useful Links:**
 
-- If you prefer video
+- [If you prefer video](https://www.youtube.com/watch?v=4JiQOsxSgSY&list=PLDmuKt_q76fd-5n3-MAYH_i1f-z6NfbFJ&index=2)
 - [Link to CustomTextField repo](https://github.com/vebbis321/CustomTextField)
 - [A customized text field made in production](https://github.com/finn-no/FinniversKit/blob/master/FinniversKit/Sources/Components/TextField/TextField.swift)
-- A more advanced implementation
+- [A more advanced implementation](https://github.com/vebbis321/MessengerClone/tree/main/MessengerClone/App/Components/AuthTextField)
 
 Thank you for reading!
