@@ -74,7 +74,6 @@ defaultTheme = "black"
     Youtubechannel = "UCm1Clu3dxCZe7ImRgWPImLg"
     GitHub = "vebbis321"
     Stackoverflow = "13302643"
-    Twitter = "@thel_foo"
 
 [page]
     # DoIt NEW | 0.2.0 whether to hide a page from home page
