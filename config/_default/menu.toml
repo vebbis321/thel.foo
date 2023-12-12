@@ -30,7 +30,7 @@
 
 [[main]]
     identifier = "contact"
-    pre = "<i class='fas fa-envelope fa-fw fa-3x'></i>"
+    pre = "<i class='fas fa-envelope fa-fw'></i>"
     post = ""
     name = ""
     url = "mailto:veb@thel.foo"
