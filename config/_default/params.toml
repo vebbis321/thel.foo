@@ -23,7 +23,7 @@ defaultTheme = "black"
         # DoIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
         title = "Thel"
         # subtitle shown in home page
-        subtitle = "A blog on iOS development"
+        subtitle = "yes"
         # whether to use typeit animation for subtitle
         typeit = true
         # whether to show social links
