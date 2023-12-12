@@ -2,8 +2,7 @@
 title: "Advanced text validation in UIKit with Combine."
 date: 2023-08-24T18:11:49+02:00
 author: "Vebjørn Daniloff"
-description: "This article shows you how you can validate text with Combine in
-UIKit." 
+description: "This article shows you how you can validate text with Combine in UIKit."
 draft: false
 tags: ["UIKit", "Combine", "Advanced", "UITextField"]
 categories: ["UIKit", "Combine"]
@@ -788,10 +787,6 @@ Beautiful! To recap what the little beautiful code snippet above the simulator d
 {{< admonition type=tip title="Validation operator" open=true >}}
 We can now also use the validation operator on any publisher that publishes a string value.
 {{< /admonition >}}
-
-
-
-
 
 How cool is that! I hope you enjoyed this article as much as I did, and thank you for reading.
 

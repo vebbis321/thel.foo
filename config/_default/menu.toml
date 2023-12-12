@@ -4,7 +4,7 @@
     pre = ""
     # you can add extra information after the name (HTML format is supported), such as icons
     post = ""
-    name = "Posts"
+    name = "posts"
     url = "/posts/"
     # title will be shown when you hover on this menu link.
     title = ""
@@ -14,28 +14,29 @@
     identifier = "series"
     pre = ""
     post = ""
-    name = "Series"
+    name = "series"
     url = "/series/"
     title = ""
     weight = 2
 
 [[main]]
-    identifier = "categories"
+    identifier = "about"
     pre = ""
     post = ""
-    name = "Categories"
-    url = "/categories/"
+    name = "about"
+    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     title = ""
     weight = 3
 
 [[main]]
-    identifier = "about"
-    pre = ""
+    identifier = "contact"
+    pre = "<i class='fas fa-envelope fa-fw fa-3x'></i>"
     post = ""
-    name = "About"
-    url = "/about/"
+    name = ""
+    url = "mailto:veb@thel.foo"
     title = ""
     weight = 4
+
 [[main]]
     identifier = "youtube"
     pre = "<i class='fab fa-youtube fa-fw'></i>"
